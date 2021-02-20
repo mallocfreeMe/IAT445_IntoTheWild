@@ -501,7 +501,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: cf24355c9b18148178eb75a57abf48d2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fd361f042d16245afb903e98b580f90c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1405,7 +1405,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.7, y: -0}
+  m_AnchoredPosition: {x: 2.2, y: -4}
   m_SizeDelta: {x: 38.2589, y: 17.0222}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1402282320
@@ -1863,7 +1863,7 @@ GameObject:
   - component: {fileID: 1995888053}
   - component: {fileID: 1995888052}
   m_Layer: 0
-  m_Name: Poisonous Food
+  m_Name: Poisonous Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
