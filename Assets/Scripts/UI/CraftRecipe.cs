@@ -2,9 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Craft
+namespace UI
 {
-    public class Recipe : MonoBehaviour
+    public class CraftRecipe : MonoBehaviour
     {
         public GameObject craftRecipeUI;
         public AudioClip interfacePopUpAudioClip;
