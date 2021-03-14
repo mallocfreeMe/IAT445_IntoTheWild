@@ -12,10 +12,11 @@ namespace Player
 
         private void OnCollisionEnter(Collision other)
         {
+            
             if (other.gameObject.CompareTag("Item"))
             {
                 Destroy(other.gameObject);
-                
+        
                 var key = other.gameObject.name;
 
                 if (!inventory.bag.ContainsKey(key))
