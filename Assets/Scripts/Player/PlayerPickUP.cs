@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UI;
 using UnityEngine;
 
@@ -13,6 +14,8 @@ namespace Player
         {
             if (other.gameObject.CompareTag("Item"))
             {
+                Destroy(other.gameObject);
+                
                 var key = other.gameObject.name;
 
                 if (!inventory.bag.ContainsKey(key))

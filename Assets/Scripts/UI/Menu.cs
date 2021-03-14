@@ -36,6 +36,9 @@ namespace UI
             player.SetActive(true);
             playerStatus.SetActive(true);
             gameObject.GetComponent<CraftRecipe>().enabled = true;
+            gameObject.GetComponent<Inventory>().enabled = true;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
         // the exit button click event

@@ -72,11 +72,15 @@ namespace UI
                     // disable the highlighted slot once the UI is hidden
                     ChooseItemHelper(null);
                     _item = null;
+                    Cursor.visible = false;
+                    Cursor.lockState = CursorLockMode.Locked;
                 }
                 else
                 {
                     _audioSource.PlayOneShot(interfacePopUpAudioClip);
                     craftRecipeUI.SetActive(true);
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
                 }
             }
         }
