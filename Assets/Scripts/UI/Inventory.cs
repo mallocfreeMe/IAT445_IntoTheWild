@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.FirstPerson;
+using Utility;
 using Image = UnityEngine.UI.Image;
 
 namespace UI
@@ -11,6 +12,7 @@ namespace UI
     public class Inventory : MonoBehaviour
     {
         public GameObject inventoryUI;
+        public GameObject cross;
         public Dictionary<string, int> bag;
 
         private Image _hunger, _thirst, _health;
@@ -49,14 +51,14 @@ namespace UI
                 if (inventoryUI.activeSelf)
                 {
                     inventoryUI.SetActive(false);
-                    Cursor.visible = false;
-                    Cursor.lockState = CursorLockMode.Locked;
+                    StaticMethods.HideCursor();
+                    cross.SetActive(true);
                 }
                 else
                 {
                     inventoryUI.SetActive(true);
-                    Cursor.visible = true;
-                    Cursor.lockState = CursorLockMode.None;
+                    StaticMethods.ShowCursor();
+                    cross.SetActive(false);
                 }
             }
         }
@@ -119,7 +121,8 @@ namespace UI
                                 _hunger.fillAmount += 0.1f;
                                 _health.fillAmount -= 0.3f;
                                 break;
-                        } 
+                        }
+
                         bag[arr[index]]--;
                     }
                 }

@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.FirstPerson;
+using Utility;
 
 namespace Player
 {
@@ -12,6 +13,7 @@ namespace Player
         public GameObject playerStatusUI;
         public GameObject playerInventoryUI;
         public GameObject playerCraftingUI;
+        public GameObject cursor;
         public new GameObject camera;
 
         private int _startTime, _currentTime;
@@ -57,12 +59,20 @@ namespace Player
             {
                 gameOverUI.SetActive(true);
                 camera.SetActive(true);
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
+                StaticMethods.ShowCursor();
+                cursor.SetActive(false);
                 gameObject.SetActive(false);
                 playerStatusUI.SetActive(false);
                 playerInventoryUI.SetActive(false);
                 playerCraftingUI.SetActive(false);
+            }
+        }
+        
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag("Water"))
+            {
+                waterFill.fillAmount += 0.1f;
             }
         }
     }

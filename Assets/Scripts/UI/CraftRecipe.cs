@@ -1,12 +1,14 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
+using Utility;
 
 namespace UI
 {
     public class CraftRecipe : MonoBehaviour
     {
         public GameObject craftRecipeUI;
+        public GameObject cursor;
         public AudioClip interfacePopUpAudioClip;
         public AudioClip craftItemCompletedAudioClip;
         public Image slot1, slot2, slot3;
@@ -72,15 +74,15 @@ namespace UI
                     // disable the highlighted slot once the UI is hidden
                     ChooseItemHelper(null);
                     _item = null;
-                    Cursor.visible = false;
-                    Cursor.lockState = CursorLockMode.Locked;
+                    StaticMethods.HideCursor();
+                    cursor.SetActive(true);
                 }
                 else
                 {
                     _audioSource.PlayOneShot(interfacePopUpAudioClip);
                     craftRecipeUI.SetActive(true);
-                    Cursor.visible = true;
-                    Cursor.lockState = CursorLockMode.None;
+                    StaticMethods.ShowCursor();
+                    cursor.SetActive(false);
                 }
             }
         }

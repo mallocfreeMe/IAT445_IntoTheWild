@@ -2,6 +2,7 @@ using System;
 using Player;
 using UnityEngine;
 using UnityEngine.UI;
+using Utility;
 
 namespace UI
 {
@@ -11,9 +12,9 @@ namespace UI
         public GameObject menu;
         public Button playButton;
         public Button exitButton;
+        public GameObject cross;
 
         [Header("Player")] public GameObject playerStatus;
-        public GameObject inventory;
         public GameObject player;
 
         private void Start()
@@ -37,8 +38,8 @@ namespace UI
             playerStatus.SetActive(true);
             gameObject.GetComponent<CraftRecipe>().enabled = true;
             gameObject.GetComponent<Inventory>().enabled = true;
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
+            StaticMethods.HideCursor();
+            cross.SetActive(true);
         }
 
         // the exit button click event
