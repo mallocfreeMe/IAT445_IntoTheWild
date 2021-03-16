@@ -23,7 +23,7 @@ namespace UI
         private Vector3 _playerPosition;
         private int _craftDistance;
         private AudioSource _audioSource;
-        
+
         private void Start()
         {
             _item = null;
@@ -31,7 +31,7 @@ namespace UI
             _audioSource = GetComponent<AudioSource>();
             _playerPosition = _player.transform.position;
             _craftDistance = 5;
-            
+
             // hide the UI when game starts
             craftRecipeUI.SetActive(false);
         }
@@ -49,11 +49,11 @@ namespace UI
             {
                 // always update player position
                 _playerPosition = _player.transform.position;
-                
+
                 // set the pos in front of the player
                 // based on https://stackoverflow.com/questions/22696782/placing-an-object-in-front-of-the-camera
                 var pos = _playerPosition + _player.transform.forward * _craftDistance;
-                
+
                 // get relative height to the terrain space based on player position, then craft the item in that position 
                 // based on https://docs.unity3d.com/ScriptReference/Terrain.SampleHeight.html
                 pos.y = Terrain.activeTerrain.SampleHeight(pos);
@@ -114,6 +114,7 @@ namespace UI
         // the item that being selected should be highlighted, and unselected slots should be normal
         private void ChooseItemHelper(Image slot)
         {
+            Color originalColor = new Color32(0xD1, 0XB7, 0X96, 0XFF);
             Color highlightedColor = new Color32(0XF3, 0XEC, 0XA4, 0XFF);
             Image[] slots = {slot1, slot2, slot3};
             for (var i = 0; i < slots.Length; i++)
@@ -124,7 +125,7 @@ namespace UI
                 }
                 else
                 {
-                    slots[i].color = Color.white;
+                    slots[i].color = originalColor;
                 }
             }
         }
@@ -150,7 +151,7 @@ namespace UI
                 {
                     Instantiate(tent, pos, Quaternion.Euler(-90, 0, 0));
                 }
-                
+
                 // play the audio clip
                 _audioSource.PlayOneShot(craftItemCompletedAudioClip);
             }

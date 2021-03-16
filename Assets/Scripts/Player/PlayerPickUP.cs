@@ -16,28 +16,24 @@ namespace Player
 
             RaycastHit hit;
 
-            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMask))
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit,
+                    Mathf.Infinity, layerMask) && Input.GetMouseButton(0) && inventory.bag.Count < 10 &&
+                hit.collider.gameObject.CompareTag("Item"))
             {
-                if (Input.GetMouseButtonDown(0))
-                {
-                    if (hit.collider.gameObject.CompareTag("Item"))
-                    {
-                        Destroy(hit.collider.gameObject);
-        
-                        var key = hit.collider.gameObject.name;
+                var key = hit.collider.gameObject.name;
 
-                        if (!inventory.bag.ContainsKey(key))
-                        {
-                            inventory.bag.Add(hit.collider.gameObject.name, 1);
-                        }
-                        else
-                        {
-                            var values = inventory.bag[key];
-                            values++;
-                            inventory.bag[hit.collider.gameObject.name] = values;
-                        }
-                    }
+                if (!inventory.bag.ContainsKey(key))
+                {
+                    inventory.bag.Add(key, 1);
                 }
+                else
+                {
+                    var values = inventory.bag[key];
+                    values++;
+                    inventory.bag[key] = values;
+                }
+
+                Destroy(hit.collider.gameObject);
             }
         }
     }

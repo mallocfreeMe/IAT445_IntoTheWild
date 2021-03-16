@@ -16,6 +16,8 @@ namespace UI
         public Dictionary<string, int> bag;
 
         private Image _hunger, _thirst, _health;
+        private int _highlightedSlotIndex;
+        private Image _previousHighlightedSlot;
 
         private void Start()
         {
@@ -41,7 +43,12 @@ namespace UI
         private void Update()
         {
             ToggleInventoryUI();
-            ShowInventoryItems();
+            if (inventoryUI.activeSelf)
+            {
+                ShowInventoryItems();
+                ScrollInventoryItems();
+                InteractWithHighlightedSlot();
+            }
         }
 
         private void ToggleInventoryUI()
@@ -51,14 +58,10 @@ namespace UI
                 if (inventoryUI.activeSelf)
                 {
                     inventoryUI.SetActive(false);
-                    StaticMethods.HideCursor();
-                    cross.SetActive(true);
                 }
                 else
                 {
                     inventoryUI.SetActive(true);
-                    StaticMethods.ShowCursor();
-                    cross.SetActive(false);
                 }
             }
         }
@@ -115,10 +118,22 @@ namespace UI
                         {
                             case "Apple":
                                 _hunger.fillAmount += 0.1f;
+                                _thirst.fillAmount += 0.1f;
+                                _health.fillAmount += 0.1f;
+                                break;
+                            case "Pear":
+                                _hunger.fillAmount += 0.1f;
+                                _thirst.fillAmount += 0.1f;
+                                _health.fillAmount += 0.1f;
+                                break;
+                            case "Pepper":
+                                _hunger.fillAmount += 0.1f;
+                                _thirst.fillAmount -= 0.1f;
                                 _health.fillAmount += 0.1f;
                                 break;
                             case "Mushroom":
                                 _hunger.fillAmount += 0.1f;
+                                _thirst.fillAmount += 0.1f;
                                 _health.fillAmount -= 0.3f;
                                 break;
                         }
@@ -126,6 +141,54 @@ namespace UI
                         bag[arr[index]]--;
                     }
                 }
+            }
+        }
+
+        private void ScrollInventoryItems()
+        {
+            Color originalColor = new Color32(0xD1, 0XB7, 0X96, 0XFF);
+            Color highlightedColor = new Color32(0XF3, 0XEC, 0XA4, 0XFF);
+
+            if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+            {
+                if (_highlightedSlotIndex < 9)
+                {
+                    _highlightedSlotIndex++;
+                }
+                else
+                {
+                    _highlightedSlotIndex = 0;
+                }
+            }
+            else if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+            {
+                if (_highlightedSlotIndex > 0)
+                {
+                    _highlightedSlotIndex--;
+                }
+                else
+                {
+                    _highlightedSlotIndex = 9;
+                }
+            }
+
+            if (_previousHighlightedSlot != null)
+            {
+                _previousHighlightedSlot.color = originalColor;
+            }
+
+            inventoryUI.transform.GetChild(_highlightedSlotIndex).gameObject.GetComponent<Image>().color =
+                highlightedColor;
+            _previousHighlightedSlot =
+                inventoryUI.transform.GetChild(_highlightedSlotIndex).gameObject.GetComponent<Image>();
+        }
+
+        private void InteractWithHighlightedSlot()
+        {
+            if (_previousHighlightedSlot != null && Input.GetMouseButtonDown(0))
+            {
+                inventoryUI.transform.GetChild(_highlightedSlotIndex).gameObject.GetComponent<Button>().onClick
+                    .Invoke();
             }
         }
     }
