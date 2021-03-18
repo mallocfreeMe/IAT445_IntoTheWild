@@ -38,7 +38,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1829371231341652, guid: 426b44a7575f71e479fab4f4e8431989, type: 3}
       propertyPath: m_Name
-      value: Apple
+      value: Apple Variant
       objectReference: {fileID: 0}
     - target: {fileID: 1829371231341652, guid: 426b44a7575f71e479fab4f4e8431989, type: 3}
       propertyPath: m_TagString
