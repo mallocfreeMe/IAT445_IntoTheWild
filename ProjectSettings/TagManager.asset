@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Item
   - Water
+  - SandTerrain
+  - GrassTerrain
+  - SwampTerrain
+  - StoneTerrain
   layers:
   - Default
   - TransparentFX
