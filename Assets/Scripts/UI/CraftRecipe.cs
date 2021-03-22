@@ -8,10 +8,10 @@ namespace UI
     public class CraftRecipe : MonoBehaviour
     {
         public GameObject craftRecipeUI;
+        public GameObject craftCostUI;
         public GameObject cursor;
         public AudioClip interfacePopUpAudioClip;
         public AudioClip craftItemCompletedAudioClip;
-        public Image slot1, slot2, slot3;
 
         [Header("Prefab")] public GameObject axe;
         public GameObject campFire;
@@ -34,31 +34,40 @@ namespace UI
 
             // hide the UI when game starts
             craftRecipeUI.SetActive(false);
+
+            // add click events to all the crafting slot
+            foreach (Transform child in craftRecipeUI.transform)
+            {
+                child.gameObject.GetComponent<Button>().onClick.AddListener(delegate
+                {
+                    InteractWithCraftingItem(child.GetSiblingIndex());
+                });
+            }
+            
+            // add click event to the build button inside the 
+            craftCostUI.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(delegate
+            {
+                BuildCraftingItem(craftCostUI.GetComponent<Image>().sprite.name);
+            });
         }
 
         private void Update()
         {
             ToggleCraftRecipeUI();
-            ChooseItem();
         }
 
         // this method get called after update
+        // set the pos in front of the player
+        // based on https://stackoverflow.com/questions/22696782/placing-an-object-in-front-of-the-camera
+        // get relative height to the terrain space based on player position, then craft the item in that position 
+        // based on https://docs.unity3d.com/ScriptReference/Terrain.SampleHeight.html
         private void LateUpdate()
         {
             if (_item != null)
             {
-                // always update player position
                 _playerPosition = _player.transform.position;
-
-                // set the pos in front of the player
-                // based on https://stackoverflow.com/questions/22696782/placing-an-object-in-front-of-the-camera
                 var pos = _playerPosition + _player.transform.forward * _craftDistance;
-
-                // get relative height to the terrain space based on player position, then craft the item in that position 
-                // based on https://docs.unity3d.com/ScriptReference/Terrain.SampleHeight.html
                 pos.y = Terrain.activeTerrain.SampleHeight(pos);
-
-                CreateItem(_item, pos);
             }
         }
 
@@ -70,9 +79,7 @@ namespace UI
                 if (craftRecipeUI.activeSelf)
                 {
                     craftRecipeUI.SetActive(false);
-
-                    // disable the highlighted slot once the UI is hidden
-                    ChooseItemHelper(null);
+                    craftCostUI.SetActive(false);
                     _item = null;
                     StaticMethods.HideCursor();
                     cursor.SetActive(true);
@@ -87,74 +94,37 @@ namespace UI
             }
         }
 
-        // press number keys (1,2 and 3) to choose which item you want to craft
-        private void ChooseItem()
+        private void InteractWithCraftingItem(int index)
         {
-            // only listens to keyboard events when the craft recipe UI is active
-            if (craftRecipeUI.activeSelf)
+            switch (index)
             {
-                if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
-                {
-                    ChooseItemHelper(slot1);
-                    _item = slot1;
-                }
-                else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
-                {
-                    ChooseItemHelper(slot2);
-                    _item = slot2;
-                }
-                else if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
-                {
-                    ChooseItemHelper(slot3);
-                    _item = slot3;
-                }
+                case 0:
+                    craftCostUI.GetComponent<Image>().sprite = Resources.Load<Sprite>("Axe Cost");
+                    break;
+                case 1:
+                    craftCostUI.GetComponent<Image>().sprite = Resources.Load<Sprite>("Camp Fire Cost");
+                    break;
+                case 2:
+                    craftCostUI.GetComponent<Image>().sprite = Resources.Load<Sprite>("Tent Cost");
+                    break;
             }
+            craftCostUI.SetActive(true);
         }
 
-        // the item that being selected should be highlighted, and unselected slots should be normal
-        private void ChooseItemHelper(Image slot)
+        private void BuildCraftingItem(string name)
         {
-            Color originalColor = new Color32(0xD1, 0XB7, 0X96, 0XFF);
-            Color highlightedColor = new Color32(0XF3, 0XEC, 0XA4, 0XFF);
-            Image[] slots = {slot1, slot2, slot3};
-            for (var i = 0; i < slots.Length; i++)
+            switch (name)
             {
-                if (slots[i] == slot)
-                {
-                    slots[i].color = highlightedColor;
-                }
-                else
-                {
-                    slots[i].color = originalColor;
-                }
+                case "Axe Cost":
+                    break;
+                case "Camp Fire Cost":
+                    break;
+                case "Tent Cost":
+                    break;
             }
-        }
-
-        // once the player choose the item he want to build
-        // left mouse click to build the item
-        private void CreateItem(Image item, Vector3 pos)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                // 1. axe, axe will fall down to the ground -> pos.y + 3
-                // 2. camp fire
-                // 3. tent, rotate -90 degree on x axis 
-                if (item == slot1)
-                {
-                    Instantiate(axe, new Vector3(pos.x, pos.y + 3, pos.z), Quaternion.identity);
-                }
-                else if (item == slot2)
-                {
-                    Instantiate(campFire, pos, Quaternion.identity);
-                }
-                else if (item == slot3)
-                {
-                    Instantiate(tent, pos, Quaternion.Euler(-90, 0, 0));
-                }
-
-                // play the audio clip
-                _audioSource.PlayOneShot(craftItemCompletedAudioClip);
-            }
+            
+            // play the audio clip
+            _audioSource.PlayOneShot(craftItemCompletedAudioClip);
         }
     }
 }

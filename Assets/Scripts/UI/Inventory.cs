@@ -12,8 +12,9 @@ namespace UI
     public class Inventory : MonoBehaviour
     {
         public GameObject inventoryUI;
-        public GameObject cross;
         public Dictionary<string, int> bag;
+        public GameObject[] itemsShowOnScreen;
+        public GameObject playerHand;
 
         private Image _hunger, _thirst, _health;
         private int _highlightedSlotIndex;
@@ -86,7 +87,14 @@ namespace UI
 
                         if (index < bag.Count && bag.ContainsKey(arr[index]))
                         {
-                            child.gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(arr[index]);
+                            // Do a string convention, ensure every name is correct, the first letter is capital
+                            var imageName = arr[index];
+                            char[] a = imageName.ToCharArray();
+                            a[0] = char.ToUpper(a[0]);
+                            imageName = new string(a);
+
+                            // load the correspond image file in the resources folder
+                            child.gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(imageName);
                             child.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text =
                                 bag[arr[index]].ToString();
                         }
@@ -186,6 +194,33 @@ namespace UI
         private void InteractWithHighlightedSlot()
         {
             if (_previousHighlightedSlot != null && Input.GetMouseButtonDown(0))
+            {
+                var keys = bag.Keys;
+                var arr = keys.ToArray();
+                if (_highlightedSlotIndex < arr.Length)
+                {
+                    playerHand.SetActive(false);
+                    foreach (var item in itemsShowOnScreen)
+                    {
+                        if (item.name == arr[_highlightedSlotIndex])
+                        {
+                            item.SetActive(true);
+                        }
+                        else
+                        {
+                            item.SetActive(false);
+                        }
+                    }
+                }
+                else
+                {
+                    playerHand.SetActive(true);
+                    foreach (var item in itemsShowOnScreen)
+                    {
+                        item.SetActive(false);
+                    }
+                }
+            } else if (_previousHighlightedSlot != null && Input.GetMouseButtonDown(1))
             {
                 inventoryUI.transform.GetChild(_highlightedSlotIndex).gameObject.GetComponent<Button>().onClick
                     .Invoke();

@@ -91,24 +91,24 @@ namespace UnityStandardAssets.Characters.FirstPerson
             if (other.tag == "GrassTerrain")
             {
                 m_AudioSource.clip = grassWalk;
-                Debug.Log("grass");
+                // Debug.Log("grass");
             }
             else if (other.tag == "SwampTerrain")
             {
                 m_AudioSource.clip = mudWalk;
-                Debug.Log("mud");
+                // Debug.Log("mud");
 
             }
             else if (other.tag == "SandTerrain")
             {
                 m_AudioSource.clip = sandwalk;
-                Debug.Log("sand");
+                // Debug.Log("sand");
             }
             else
             {
                 int n = Random.Range(1, m_FootstepSounds.Length);
                 m_AudioSource.clip = m_FootstepSounds[n];
-                Debug.Log("stone");
+                // Debug.Log("stone");
             }
         }
 
