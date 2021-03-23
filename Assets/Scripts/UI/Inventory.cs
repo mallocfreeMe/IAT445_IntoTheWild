@@ -220,10 +220,12 @@ namespace UI
                         item.SetActive(false);
                     }
                 }
-            } else if (_previousHighlightedSlot != null && Input.GetMouseButtonDown(0))
-            {
-                inventoryUI.transform.GetChild(_highlightedSlotIndex).gameObject.GetComponent<Button>().onClick
-                    .Invoke();
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    inventoryUI.transform.GetChild(_highlightedSlotIndex).gameObject.GetComponent<Button>().onClick
+                        .Invoke();
+                }
             }
         }
     }
