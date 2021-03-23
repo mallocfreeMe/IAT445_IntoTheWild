@@ -54,16 +54,18 @@ namespace UI
             });
 
             _axeRecipe = new Dictionary<string, int>();
-            _axeRecipe.Add("Stone", 2);
-            _axeRecipe.Add("Log", 1);
+            // _axeRecipe.Add("Stone", 2);
+            // _axeRecipe.Add("Log", 1);
+            _axeRecipe.Add("Branch", 2);
 
             _campFireRecipe = new Dictionary<string, int>();
             _campFireRecipe.Add("Branch", 2);
 
             _tentRecipe = new Dictionary<string, int>();
-            _tentRecipe.Add("Log", 5);
-            _tentRecipe.Add("Branch", 4);
-            _tentRecipe.Add("Reed", 10);
+            // _tentRecipe.Add("Log", 5);
+            // _tentRecipe.Add("Branch", 4);
+            // _tentRecipe.Add("Reed", 10);
+            _tentRecipe.Add("Branch", 2);
         }
 
         private void Update()
@@ -184,7 +186,7 @@ namespace UI
                     case "Axe Cost":
                         recipe = _axeRecipe;
                         index = 0;
-                        Instantiate(axePrefab,_craftPos, Quaternion.identity);
+                        Instantiate(axePrefab,new Vector3(_craftPos.x,_craftPos.y + 1,_craftPos.z), Quaternion.identity);
                         break;
                     case "Camp Fire Cost":
                         recipe = _campFireRecipe;
@@ -194,7 +196,7 @@ namespace UI
                     case "Tent Cost":
                         recipe = _tentRecipe;
                         index = 2;
-                        Instantiate(tentPrefab,_craftPos, Quaternion.identity);
+                        Instantiate(tentPrefab,new Vector3(_craftPos.x,_craftPos.y + 1,_craftPos.z), Quaternion.identity);
                         break;
                 }
                 
