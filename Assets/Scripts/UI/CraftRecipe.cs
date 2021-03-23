@@ -159,7 +159,7 @@ namespace UI
             {
                 if (inventory.bag.ContainsKey(item.Key))
                 {
-                    if (inventory.bag[item.Key] == item.Value)
+                    if (inventory.bag[item.Key] >= item.Value)
                     {
                         count++;
                     }
@@ -186,17 +186,20 @@ namespace UI
                     case "Axe Cost":
                         recipe = _axeRecipe;
                         index = 0;
-                        Instantiate(axePrefab,new Vector3(_craftPos.x,_craftPos.y + 1,_craftPos.z), Quaternion.identity);
+                        var objA = Instantiate(axePrefab,new Vector3(_craftPos.x,_craftPos.y + 1,_craftPos.z), Quaternion.identity);
+                        objA.name = "Axe";
                         break;
                     case "Camp Fire Cost":
                         recipe = _campFireRecipe;
                         index = 1;
-                        Instantiate(campFirePrefab,_craftPos, Quaternion.identity);
+                        var objC =Instantiate(campFirePrefab,_craftPos, Quaternion.identity);
+                        objC.name = "CampFire";
                         break;
                     case "Tent Cost":
                         recipe = _tentRecipe;
                         index = 2;
-                        Instantiate(tentPrefab,new Vector3(_craftPos.x,_craftPos.y + 1,_craftPos.z), Quaternion.identity);
+                        var objT = Instantiate(tentPrefab,new Vector3(_craftPos.x,_craftPos.y + 1,_craftPos.z), Quaternion.identity);
+                        objT.name = "Tent";
                         break;
                 }
                 

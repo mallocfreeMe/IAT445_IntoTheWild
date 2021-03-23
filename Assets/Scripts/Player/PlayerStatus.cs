@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.FirstPerson;
@@ -13,6 +15,7 @@ namespace Player
         public GameObject playerStatusUI;
         public GameObject playerInventoryUI;
         public GameObject playerCraftingUI;
+        public DayCounter dayCounter;
         public GameObject cursor;
         public new GameObject camera;
 
@@ -26,7 +29,6 @@ namespace Player
         private void Update()
         {
             CheckTimePass();
-            CheckHealth();
             CheckGameOver();
         }
 
@@ -35,21 +37,24 @@ namespace Player
             _currentTime = DateTime.Now.Minute;
             if (_currentTime > _startTime)
             {
-                hungerFill.fillAmount -= 0.2f;
-                waterFill.fillAmount -= 0.2f;
-                _startTime = _currentTime;
-            }
-            else if (_currentTime < _startTime)
-            {
-                _startTime = _currentTime;
-            }
-        }
+                if (!dayCounter.isNight)
+                {
+                    if (hungerFill.fillAmount == 0 || waterFill.fillAmount == 0)
+                    {
+                        healthFill.fillAmount -= 0.2f;
+                    }
+                    else
+                    {
+                        hungerFill.fillAmount -= 0.3f;
+                        waterFill.fillAmount -= 0.1f;
+                    }
+                }
+                else
+                {
+                    healthFill.fillAmount -= 0.2f;
+                }
 
-        private void CheckHealth()
-        {
-            if (hungerFill.fillAmount == 0 | waterFill.fillAmount == 0)
-            {
-                healthFill.fillAmount -= 0.5f;
+                _startTime = _currentTime;
             }
         }
 
@@ -66,13 +71,27 @@ namespace Player
                 playerInventoryUI.SetActive(false);
                 playerCraftingUI.SetActive(false);
             }
+
+            if (dayCounter.dayCountDown == 3 && !dayCounter.isNight)
+            {
+                gameOverUI.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "You finish the game";
+                gameOverUI.SetActive(true);
+                camera.SetActive(true);
+                StaticMethods.ShowCursor();
+                cursor.SetActive(false);
+                gameObject.SetActive(false);
+                playerStatusUI.SetActive(false);
+                playerInventoryUI.SetActive(false);
+                playerCraftingUI.SetActive(false);
+            }
         }
-        
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.CompareTag("Water"))
             {
                 waterFill.fillAmount += 0.1f;
+                healthFill.fillAmount -= 0.1f;
             }
         }
     }

@@ -44,6 +44,7 @@ namespace UI
         private void Update()
         {
             ToggleInventoryUI();
+            ShowHighlightedItemOnScreen();
             if (inventoryUI.activeSelf)
             {
                 ShowInventoryItems();
@@ -191,7 +192,7 @@ namespace UI
                 inventoryUI.transform.GetChild(_highlightedSlotIndex).gameObject.GetComponent<Image>();
         }
 
-        private void InteractWithHighlightedSlot()
+        private void ShowHighlightedItemOnScreen()
         {
             if (_previousHighlightedSlot != null)
             {
@@ -220,12 +221,15 @@ namespace UI
                         item.SetActive(false);
                     }
                 }
+            }
+        }
 
-                if (Input.GetMouseButtonDown(1))
-                {
-                    inventoryUI.transform.GetChild(_highlightedSlotIndex).gameObject.GetComponent<Button>().onClick
-                        .Invoke();
-                }
+        private void InteractWithHighlightedSlot()
+        {
+            if (_previousHighlightedSlot != null && Input.GetMouseButtonDown(1))
+            {
+                inventoryUI.transform.GetChild(_highlightedSlotIndex).gameObject.GetComponent<Button>().onClick
+                    .Invoke();
             }
         }
     }

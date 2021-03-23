@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -8005392868007599690}
   m_Layer: 0
   m_Name: Tent
-  m_TagString: Item
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 416725569476207113}
   m_LocalRotation: {x: 0.010565055, y: -0.1274662, z: 0.026984455, w: 0.9914195}
-  m_LocalPosition: {x: -845.9639, y: -73.86339, z: -12.999771}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -845.89, y: -74.522, z: -13.031}
+  m_LocalScale: {x: 2.1095, y: 2.1095, z: 2.1095}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
