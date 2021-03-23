@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Utility;
@@ -9,24 +10,26 @@ namespace UI
     {
         public GameObject craftRecipeUI;
         public GameObject craftCostUI;
+        public Inventory inventory;
         public GameObject cursor;
         public AudioClip interfacePopUpAudioClip;
         public AudioClip craftItemCompletedAudioClip;
+        [Header("Prefab")] public GameObject axePrefab;
+        public GameObject campFirePrefab;
+        public GameObject tentPrefab;
 
-        [Header("Prefab")] public GameObject axe;
-        public GameObject campFire;
-        public GameObject tent;
-
-        // item the player selected 
-        private Image _item;
         private GameObject _player;
         private Vector3 _playerPosition;
         private int _craftDistance;
+        private Vector3 _craftPos;
+        private int _craftRecipeUIHighlightedIndex;
+        private Dictionary<string, int> _axeRecipe;
+        private Dictionary<string, int> _campFireRecipe;
+        private Dictionary<string, int> _tentRecipe;
         private AudioSource _audioSource;
 
         private void Start()
         {
-            _item = null;
             _player = GameObject.Find("Player");
             _audioSource = GetComponent<AudioSource>();
             _playerPosition = _player.transform.position;
@@ -40,15 +43,27 @@ namespace UI
             {
                 child.gameObject.GetComponent<Button>().onClick.AddListener(delegate
                 {
-                    InteractWithCraftingItem(child.GetSiblingIndex());
+                    InteractWithCraftRecipeUI(child.GetSiblingIndex());
                 });
             }
-            
+
             // add click event to the build button inside the 
             craftCostUI.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(delegate
             {
-                BuildCraftingItem(craftCostUI.GetComponent<Image>().sprite.name);
+                InteractWithCraftCostUI(craftCostUI.GetComponent<Image>().sprite.name);
             });
+
+            _axeRecipe = new Dictionary<string, int>();
+            _axeRecipe.Add("Stone", 2);
+            _axeRecipe.Add("Log", 1);
+
+            _campFireRecipe = new Dictionary<string, int>();
+            _campFireRecipe.Add("Branch", 2);
+
+            _tentRecipe = new Dictionary<string, int>();
+            _tentRecipe.Add("Log", 5);
+            _tentRecipe.Add("Branch", 4);
+            _tentRecipe.Add("Reed", 10);
         }
 
         private void Update()
@@ -56,19 +71,11 @@ namespace UI
             ToggleCraftRecipeUI();
         }
 
-        // this method get called after update
-        // set the pos in front of the player
-        // based on https://stackoverflow.com/questions/22696782/placing-an-object-in-front-of-the-camera
-        // get relative height to the terrain space based on player position, then craft the item in that position 
-        // based on https://docs.unity3d.com/ScriptReference/Terrain.SampleHeight.html
         private void LateUpdate()
         {
-            if (_item != null)
-            {
-                _playerPosition = _player.transform.position;
-                var pos = _playerPosition + _player.transform.forward * _craftDistance;
-                pos.y = Terrain.activeTerrain.SampleHeight(pos);
-            }
+            _playerPosition = _player.transform.position;
+            _craftPos = _playerPosition + _player.transform.forward * _craftDistance;
+            _craftPos.y = Terrain.activeTerrain.SampleHeight(_craftPos);
         }
 
         // if the player presses down b key, toggle the craft recipe UI
@@ -80,7 +87,6 @@ namespace UI
                 {
                     craftRecipeUI.SetActive(false);
                     craftCostUI.SetActive(false);
-                    _item = null;
                     StaticMethods.HideCursor();
                     cursor.SetActive(true);
                 }
@@ -94,37 +100,120 @@ namespace UI
             }
         }
 
-        private void InteractWithCraftingItem(int index)
+        private void InteractWithCraftRecipeUI(int index)
         {
+            if (_craftRecipeUIHighlightedIndex == index && craftCostUI.activeSelf)
+            {
+                craftCostUI.SetActive(false);
+            }
+            else
+            {
+                switch (index)
+                {
+                    case 0:
+                        craftCostUI.GetComponent<Image>().sprite = Resources.Load<Sprite>("Axe Cost");
+                        break;
+                    case 1:
+                        craftCostUI.GetComponent<Image>().sprite = Resources.Load<Sprite>("Camp Fire Cost");
+                        break;
+                    case 2:
+                        craftCostUI.GetComponent<Image>().sprite = Resources.Load<Sprite>("Tent Cost");
+                        break;
+                }
+
+                if (CheckCraftCost(index))
+                {
+                    craftCostUI.transform.GetChild(0).GetComponent<Image>().color = Color.green;
+                }
+                else
+                {
+                    craftCostUI.transform.GetChild(0).GetComponent<Image>().color = Color.red;
+                }
+
+                craftCostUI.SetActive(true);
+            }
+
+            _craftRecipeUIHighlightedIndex = index;
+        }
+
+        private bool CheckCraftCost(int index)
+        {
+            var recipe = _axeRecipe;
             switch (index)
             {
                 case 0:
-                    craftCostUI.GetComponent<Image>().sprite = Resources.Load<Sprite>("Axe Cost");
+                    recipe = _axeRecipe;
                     break;
                 case 1:
-                    craftCostUI.GetComponent<Image>().sprite = Resources.Load<Sprite>("Camp Fire Cost");
+                    recipe = _campFireRecipe;
                     break;
                 case 2:
-                    craftCostUI.GetComponent<Image>().sprite = Resources.Load<Sprite>("Tent Cost");
+                    recipe = _tentRecipe;
                     break;
             }
-            craftCostUI.SetActive(true);
+
+            var count = 0;
+            foreach (var item in recipe)
+            {
+                if (inventory.bag.ContainsKey(item.Key))
+                {
+                    if (inventory.bag[item.Key] == item.Value)
+                    {
+                        count++;
+                    }
+                }
+            }
+
+            if (count == recipe.Count)
+            {
+                return true;
+            }
+
+            return false;
         }
 
-        private void BuildCraftingItem(string name)
+        private void InteractWithCraftCostUI(string name)
         {
-            switch (name)
+            if (craftCostUI.transform.GetChild(0).GetComponent<Image>().color == Color.green)
             {
-                case "Axe Cost":
-                    break;
-                case "Camp Fire Cost":
-                    break;
-                case "Tent Cost":
-                    break;
+                var recipe = _axeRecipe;
+                var index = 0;
+                
+                switch (name)
+                {
+                    case "Axe Cost":
+                        recipe = _axeRecipe;
+                        index = 0;
+                        Instantiate(axePrefab,_craftPos, Quaternion.identity);
+                        break;
+                    case "Camp Fire Cost":
+                        recipe = _campFireRecipe;
+                        index = 1;
+                        Instantiate(campFirePrefab,_craftPos, Quaternion.identity);
+                        break;
+                    case "Tent Cost":
+                        recipe = _tentRecipe;
+                        index = 2;
+                        Instantiate(tentPrefab,_craftPos, Quaternion.identity);
+                        break;
+                }
+                
+                foreach (var item in recipe)
+                {
+                    inventory.bag[item.Key] -= item.Value;
+                }
+
+                _audioSource.PlayOneShot(craftItemCompletedAudioClip);
+                
+                if (CheckCraftCost(index))
+                {
+                    craftCostUI.transform.GetChild(0).GetComponent<Image>().color = Color.green;
+                }
+                else
+                {
+                    craftCostUI.transform.GetChild(0).GetComponent<Image>().color = Color.red;
+                }
             }
-            
-            // play the audio clip
-            _audioSource.PlayOneShot(craftItemCompletedAudioClip);
         }
     }
 }

@@ -193,7 +193,7 @@ namespace UI
 
         private void InteractWithHighlightedSlot()
         {
-            if (_previousHighlightedSlot != null && Input.GetMouseButtonDown(0))
+            if (_previousHighlightedSlot != null)
             {
                 var keys = bag.Keys;
                 var arr = keys.ToArray();
@@ -220,7 +220,7 @@ namespace UI
                         item.SetActive(false);
                     }
                 }
-            } else if (_previousHighlightedSlot != null && Input.GetMouseButtonDown(1))
+            } else if (_previousHighlightedSlot != null && Input.GetMouseButtonDown(0))
             {
                 inventoryUI.transform.GetChild(_highlightedSlotIndex).gameObject.GetComponent<Button>().onClick
                     .Invoke();
