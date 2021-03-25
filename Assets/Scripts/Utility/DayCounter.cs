@@ -44,7 +44,7 @@ namespace Utility
                 RenderSettings.skybox = nightMaterial;
                 foreach (Transform child in gameObject.transform)
                 {
-                    child.gameObject.GetComponent<Light>().intensity = 0.2f;
+                    child.gameObject.GetComponent<Light>().intensity = 0.3f;
                 }
             }
             else

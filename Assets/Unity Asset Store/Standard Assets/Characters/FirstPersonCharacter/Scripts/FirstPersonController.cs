@@ -28,7 +28,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
-        public AudioClip grassWalk, sandwalk, mudWalk;
+        public AudioClip[] grassWalk, sandwalk, mudWalk;
+        private int _terrainType; // 1 = stone, 2 = grass, 3 = sand, 4 = mud
 
 
         private Camera m_Camera;
@@ -88,27 +89,37 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.tag == "GrassTerrain")
+            // 1 = stone, 2 = grass, 3 = sand, 4 = mud
+            if (other.tag == "StoneTerrain" || other.tag == "StoneTerrainSpc")
             {
-                m_AudioSource.clip = grassWalk;
-                // Debug.Log("grass");
+                _terrainType = 1;
+                Debug.Log("stone");
             }
-            else if (other.tag == "SwampTerrain")
+            else if (other.tag == "GrassTerrain")
             {
-                m_AudioSource.clip = mudWalk;
-                // Debug.Log("mud");
-
+                _terrainType = 2;
+                Debug.Log("grass");
             }
             else if (other.tag == "SandTerrain")
             {
-                m_AudioSource.clip = sandwalk;
-                // Debug.Log("sand");
+                _terrainType = 3;
+                Debug.Log("sand");
             }
-            else
+            else if (other.tag == "SwampTerrain")
             {
-                int n = Random.Range(1, m_FootstepSounds.Length);
-                m_AudioSource.clip = m_FootstepSounds[n];
-                // Debug.Log("stone");
+                _terrainType = 4;
+                Debug.Log("mud");
+
+            }
+
+
+        }
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.tag == "StoneTerrainSpc")
+            {
+                _terrainType = 2;
+                Debug.Log("grass");
             }
         }
 
@@ -200,12 +211,52 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             // pick & play a random footstep sound from the array,
             // excluding sound at index 0
-            int n = Random.Range(1, m_FootstepSounds.Length);
-            //m_AudioSource.clip = m_FootstepSounds[n];
-            m_AudioSource.PlayOneShot(m_AudioSource.clip);
-            // move picked sound to index 0 so it's not picked next time
-            m_FootstepSounds[n] = m_FootstepSounds[0];
-            m_FootstepSounds[0] = m_AudioSource.clip;
+
+            //grassWalk, sandwalk, mudWalk;
+            // 1 = stone, 2 = grass, 3 = sand, 4 = mud
+            if (_terrainType == 1)
+            {
+                int n = Random.Range(1, m_FootstepSounds.Length);
+                m_AudioSource.clip = m_FootstepSounds[n];
+                m_AudioSource.PlayOneShot(m_AudioSource.clip);
+
+                // move picked sound to index 0 so it's not picked next time
+                m_FootstepSounds[n] = m_FootstepSounds[0];
+                m_FootstepSounds[0] = m_AudioSource.clip;
+
+            }
+            else if (_terrainType == 2)
+            {
+                int n = Random.Range(1, grassWalk.Length);
+                m_AudioSource.clip = grassWalk[n];
+                m_AudioSource.PlayOneShot(m_AudioSource.clip);
+
+                // move picked sound to index 0 so it's not picked next time
+                grassWalk[n] = grassWalk[0];
+                grassWalk[0] = m_AudioSource.clip;
+            }
+            else if (_terrainType == 3)
+            {
+                int n = Random.Range(1, sandwalk.Length);
+                m_AudioSource.clip = sandwalk[n];
+                m_AudioSource.PlayOneShot(m_AudioSource.clip);
+
+                // move picked sound to index 0 so it's not picked next time
+                sandwalk[n] = sandwalk[0];
+                sandwalk[0] = m_AudioSource.clip;
+            }
+            else if (_terrainType == 4)
+            {
+                int n = Random.Range(1, mudWalk.Length);
+                m_AudioSource.clip = mudWalk[n];
+                m_AudioSource.PlayOneShot(m_AudioSource.clip);
+
+                // move picked sound to index 0 so it's not picked next time
+                mudWalk[n] = mudWalk[0];
+                mudWalk[0] = m_AudioSource.clip;
+            }
+
+
         }
 
 
