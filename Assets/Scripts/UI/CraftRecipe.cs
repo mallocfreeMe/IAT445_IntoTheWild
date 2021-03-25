@@ -125,11 +125,11 @@ namespace UI
 
                 if (CheckCraftCost(index))
                 {
-                    craftCostUI.transform.GetChild(0).GetComponent<Image>().color = Color.green;
+                    craftCostUI.transform.GetChild(0).GetComponent<Image>().color = Color.yellow;
                 }
                 else
                 {
-                    craftCostUI.transform.GetChild(0).GetComponent<Image>().color = Color.red;
+                    craftCostUI.transform.GetChild(0).GetComponent<Image>().color = Color.grey;
                 }
 
                 craftCostUI.SetActive(true);
@@ -176,7 +176,7 @@ namespace UI
 
         private void InteractWithCraftCostUI(string name)
         {
-            if (craftCostUI.transform.GetChild(0).GetComponent<Image>().color == Color.green)
+            if (craftCostUI.transform.GetChild(0).GetComponent<Image>().color == Color.yellow)
             {
                 var recipe = _axeRecipe;
                 var index = 0;
@@ -212,11 +212,11 @@ namespace UI
                 
                 if (CheckCraftCost(index))
                 {
-                    craftCostUI.transform.GetChild(0).GetComponent<Image>().color = Color.green;
+                    craftCostUI.transform.GetChild(0).GetComponent<Image>().color = Color.yellow;
                 }
                 else
                 {
-                    craftCostUI.transform.GetChild(0).GetComponent<Image>().color = Color.red;
+                    craftCostUI.transform.GetChild(0).GetComponent<Image>().color = Color.grey;
                 }
             }
         }
