@@ -93,22 +93,22 @@ namespace UnityStandardAssets.Characters.FirstPerson
             if (other.tag == "StoneTerrain" || other.tag == "StoneTerrainSpc")
             {
                 _terrainType = 1;
-                Debug.Log("stone");
+                // Debug.Log("stone");
             }
             else if (other.tag == "GrassTerrain")
             {
                 _terrainType = 2;
-                Debug.Log("grass");
+                // Debug.Log("grass");
             }
             else if (other.tag == "SandTerrain")
             {
                 _terrainType = 3;
-                Debug.Log("sand");
+                // Debug.Log("sand");
             }
             else if (other.tag == "SwampTerrain")
             {
                 _terrainType = 4;
-                Debug.Log("mud");
+                // Debug.Log("mud");
 
             }
 
