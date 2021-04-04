@@ -19,6 +19,8 @@ namespace UI
         private Image _hunger, _thirst, _health;
         private int _highlightedSlotIndex;
         private Image _previousHighlightedSlot;
+        private Sprite _highlightedSlotSprite;
+        private Sprite _notHighlightedSlotSprite;
 
         private void Start()
         {
@@ -39,6 +41,8 @@ namespace UI
             _hunger = GameObject.Find("/Canvas/Player Status/Hunger/Hunger Fill").GetComponent<Image>();
             _thirst = GameObject.Find("/Canvas/Player Status/Water/Water Fill").GetComponent<Image>();
             _health = GameObject.Find("/Canvas/Player Status/Health/Health Fill").GetComponent<Image>();
+            _highlightedSlotSprite = Resources.Load<Sprite>("Selected Slot");
+            _notHighlightedSlotSprite = Resources.Load<Sprite>("Unselected Slot");
         }
 
         private void Update()
@@ -95,7 +99,8 @@ namespace UI
                             imageName = new string(a);
 
                             // load the correspond image file in the resources folder
-                            child.gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(imageName);
+                            child.gameObject.GetComponent<Image>().sprite =
+                                Resources.Load<Sprite>(imageName);
                             child.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text =
                                 bag[arr[index]].ToString();
                         }
@@ -155,9 +160,6 @@ namespace UI
 
         private void ScrollInventoryItems()
         {
-            Color originalColor = new Color32(0xD1, 0XB7, 0X96, 0XFF);
-            Color highlightedColor = new Color32(0XF3, 0XEC, 0XA4, 0XFF);
-
             if (Input.GetAxis("Mouse ScrollWheel") < 0f)
             {
                 if (_highlightedSlotIndex < 9)
@@ -183,13 +185,13 @@ namespace UI
 
             if (_previousHighlightedSlot != null)
             {
-                _previousHighlightedSlot.color = originalColor;
+                _previousHighlightedSlot.sprite = _notHighlightedSlotSprite;
             }
 
-            inventoryUI.transform.GetChild(_highlightedSlotIndex).gameObject.GetComponent<Image>().color =
-                highlightedColor;
+            inventoryUI.transform.GetChild(_highlightedSlotIndex).GetChild(1).gameObject.GetComponent<Image>().sprite =
+                _highlightedSlotSprite;
             _previousHighlightedSlot =
-                inventoryUI.transform.GetChild(_highlightedSlotIndex).gameObject.GetComponent<Image>();
+                inventoryUI.transform.GetChild(_highlightedSlotIndex).GetChild(1).gameObject.GetComponent<Image>();
         }
 
         private void ShowHighlightedItemOnScreen()
