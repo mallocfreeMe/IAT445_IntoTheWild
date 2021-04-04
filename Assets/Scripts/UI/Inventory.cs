@@ -134,25 +134,27 @@ namespace UI
                                 _hunger.fillAmount += 0.1f;
                                 _thirst.fillAmount += 0.1f;
                                 _health.fillAmount += 0.1f;
+                                bag[arr[index]]--;
                                 break;
                             case "Pear":
                                 _hunger.fillAmount += 0.1f;
                                 _thirst.fillAmount += 0.1f;
                                 _health.fillAmount += 0.1f;
+                                bag[arr[index]]--;
                                 break;
                             case "Pepper":
                                 _hunger.fillAmount += 0.1f;
                                 _thirst.fillAmount -= 0.1f;
                                 _health.fillAmount += 0.1f;
+                                bag[arr[index]]--;
                                 break;
                             case "Mushroom":
                                 _hunger.fillAmount += 0.1f;
                                 _thirst.fillAmount += 0.1f;
                                 _health.fillAmount -= 0.3f;
+                                bag[arr[index]]--;
                                 break;
                         }
-
-                        bag[arr[index]]--;
                     }
                 }
             }
