@@ -13,6 +13,8 @@ namespace UI
         public Button playButton;
         public Button exitButton;
         public GameObject cross;
+        public Pause pausePanel;
+        public GameObject inventory;
 
         [Header("Player")] public GameObject playerStatus;
         public GameObject player;
@@ -40,6 +42,8 @@ namespace UI
             gameObject.GetComponent<Inventory>().enabled = true;
             StaticMethods.HideCursor();
             cross.SetActive(true);
+            pausePanel.enabled = true;
+            inventory.SetActive(true);
         }
 
         // the exit button click event

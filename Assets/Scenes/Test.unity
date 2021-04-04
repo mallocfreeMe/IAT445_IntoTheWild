@@ -456,14 +456,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   craftRecipeUI: {fileID: 343147209}
+  craftCostUI: {fileID: 0}
+  inventory: {fileID: 0}
+  cursor: {fileID: 0}
   interfacePopUpAudioClip: {fileID: 8300000, guid: c54a9ba39046841e3b3ee209bece8557, type: 3}
   craftItemCompletedAudioClip: {fileID: 8300000, guid: 55f677922ab254fd2b0594a7cfbd560b, type: 3}
-  slot1: {fileID: 859248897}
-  slot2: {fileID: 1527189675}
-  slot3: {fileID: 2053749852}
-  axe: {fileID: 5410651843618714515, guid: 0d24b6750ed974020aeb530f250330e8, type: 3}
-  campFire: {fileID: 5410651843618714515, guid: 0d24b6750ed974020aeb530f250330e8, type: 3}
-  tent: {fileID: 5410651843618714515, guid: 0d24b6750ed974020aeb530f250330e8, type: 3}
+  axePrefab: {fileID: 0}
+  campFirePrefab: {fileID: 0}
+  tentPrefab: {fileID: 0}
 --- !u!82 &237029675
 AudioSource:
   m_ObjectHideFlags: 0
@@ -576,8 +576,8 @@ MonoBehaviour:
   menu: {fileID: 631540925}
   playButton: {fileID: 152650430}
   exitButton: {fileID: 1578172204}
+  cross: {fileID: 0}
   playerStatus: {fileID: 1329531555}
-  inventory: {fileID: 938179209}
   player: {fileID: 2116214530}
 --- !u!114 &237029677
 MonoBehaviour:
@@ -607,6 +607,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryUI: {fileID: 938179209}
+  itemsShowOnScreen: []
+  playerHand: {fileID: 0}
 --- !u!1 &343147209 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4343816167744158726, guid: 46e086351dac54504a2a63bc1e2df656, type: 3}
@@ -790,8 +792,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e897d8b9b86942e2a2e8f555696c4dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isNight: 0
+  dayCounter: {fileID: 0}
   dayMaterial: {fileID: 2100000, guid: 2bd8959f5fbd3644aa33af1a155fc147, type: 2}
   nightMaterial: {fileID: 2100000, guid: cc421da483ed06c49933077a621bff25, type: 2}
+  dayCountDown: 0
 --- !u!1 &812122498 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4898373727885951211, guid: 43cfdaaa9f59e4acda7a0cacdfebf51a, type: 3}
@@ -905,17 +910,6 @@ MonoBehaviour:
   waveFrequency: 0.75
   waveLength: 1
   waveOriginPosition: {x: 0, y: 0, z: 0}
---- !u!114 &859248897 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4343816167085713358, guid: 46e086351dac54504a2a63bc1e2df656, type: 3}
-  m_PrefabInstance: {fileID: 4343816167401012943}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &938179209 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 874704428577343427, guid: 0ac5febf140d6446a948838e437d9225, type: 3}
@@ -1532,17 +1526,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.8140005, y: 0.21063976, z: 0.14940424}
   m_Center: {x: 0.0016900752, y: 0.044982098, z: -0.0013449047}
---- !u!114 &1527189675 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4343816168558964324, guid: 46e086351dac54504a2a63bc1e2df656, type: 3}
-  m_PrefabInstance: {fileID: 4343816167401012943}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1542008553
 GameObject:
   m_ObjectHideFlags: 0
@@ -1874,17 +1857,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &2053749852 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4343816168044266131, guid: 46e086351dac54504a2a63bc1e2df656, type: 3}
-  m_PrefabInstance: {fileID: 4343816167401012943}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2069577271
 PrefabInstance:
   m_ObjectHideFlags: 0

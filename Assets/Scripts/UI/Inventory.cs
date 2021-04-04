@@ -43,7 +43,7 @@ namespace UI
 
         private void Update()
         {
-            ToggleInventoryUI();
+            // ToggleInventoryUI();
             ShowHighlightedItemOnScreen();
             if (inventoryUI.activeSelf)
             {
