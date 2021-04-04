@@ -61,6 +61,17 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			m_MouseLook.Init(transform , m_Camera.transform);
         }
 
+        public void SetSensitivityToZero()
+        {
+            m_MouseLook.XSensitivity = 0;
+            m_MouseLook.YSensitivity = 0;
+        }
+
+        public void ResetSensitivity()
+        {
+            m_MouseLook.XSensitivity = 2;
+            m_MouseLook.YSensitivity = 2;
+        }
 
         // Update is called once per frame
         private void Update()
@@ -111,15 +122,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 // Debug.Log("mud");
 
             }
-
-
         }
         private void OnTriggerExit(Collider other)
         {
             if (other.tag == "StoneTerrainSpc")
             {
                 _terrainType = 2;
-                Debug.Log("grass");
+                // Debug.Log("grass");
             }
         }
 

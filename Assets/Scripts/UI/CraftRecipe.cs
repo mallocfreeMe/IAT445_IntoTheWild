@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityStandardAssets.Characters.FirstPerson;
 using Utility;
 
 namespace UI
@@ -87,6 +88,7 @@ namespace UI
             {
                 if (craftRecipeUI.activeSelf)
                 {
+                    _player.GetComponent<FirstPersonController>().ResetSensitivity();
                     craftRecipeUI.SetActive(false);
                     craftCostUI.SetActive(false);
                     StaticMethods.HideCursor();
@@ -94,6 +96,7 @@ namespace UI
                 }
                 else
                 {
+                    _player.GetComponent<FirstPersonController>().SetSensitivityToZero();
                     _audioSource.PlayOneShot(interfacePopUpAudioClip);
                     craftRecipeUI.SetActive(true);
                     StaticMethods.ShowCursor();
