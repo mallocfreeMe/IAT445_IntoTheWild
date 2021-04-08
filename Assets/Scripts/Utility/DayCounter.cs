@@ -11,9 +11,6 @@ namespace Utility
         public Material dayMaterial;
         public Material nightMaterial;
         public int dayCountDown;
-        [Header("Day Night Controls")]
-        public int timeFactor = 4;
-        public double dayNightThreshold = 0.5;
 
         private float _time;
         private bool _oneDayPass;
@@ -27,15 +24,15 @@ namespace Utility
         {
             // rotate the direction light based on the delta time, this snippet of code was taken from, and I made some modifications
             // https://answers.unity.com/questions/1675917/count-days-using-in-game-time-cycle-count-light-ro.html
-            transform.RotateAround(Vector3.zero, Vector3.right, Time.deltaTime * timeFactor);
+            transform.RotateAround(Vector3.zero, Vector3.right, Time.deltaTime * 4);
             transform.LookAt(Vector3.zero);
-            _time += Time.deltaTime * timeFactor;
+            _time += Time.deltaTime * 4;
             var day = _time / 360;
 
             // only keep the digits for the day variable, and compare it with 0.5
             // to decide which skybox material to use
             var result = day - Math.Truncate(day);
-            if (result > dayNightThreshold)
+            if (result > 0.5)
             {
                 isNight = true;
                 if (!_oneDayPass)
