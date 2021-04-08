@@ -10,8 +10,8 @@ namespace UI
     {
         [Header("Menu Elements")] public new GameObject camera;
         public GameObject menu;
-        public Button playButton;
-        public Button exitButton;
+        //public Button playButton;
+        //public Button exitButton;
         public GameObject cross;
         public Pause pausePanel;
         public GameObject inventory;
@@ -21,8 +21,10 @@ namespace UI
 
         private void Start()
         {
-            playButton.onClick.AddListener(Play);
-            exitButton.onClick.AddListener(Exit);
+            Play();
+
+            //playButton.onClick.AddListener(Play);
+            //exitButton.onClick.AddListener(Exit);
         }
 
         // the play button click event
