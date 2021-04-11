@@ -18,6 +18,7 @@ namespace Player
         public DayCounter dayCounter;
         public GameObject cursor;
         public new GameObject camera;
+        public bool closeToCampFire;
 
         private int _startTime, _currentTime;
 
@@ -51,7 +52,22 @@ namespace Player
                 }
                 else
                 {
-                    healthFill.fillAmount -= 0.2f;
+                    if (!closeToCampFire)
+                    {
+                        healthFill.fillAmount -= 0.2f;
+                    }
+                    else
+                    {
+                        if (hungerFill.fillAmount == 0 || waterFill.fillAmount == 0)
+                        {
+                            healthFill.fillAmount -= 0.2f;
+                        }
+                        else
+                        {
+                            hungerFill.fillAmount -= 0.3f;
+                            waterFill.fillAmount -= 0.1f;
+                        }
+                    }
                 }
 
                 _startTime = _currentTime;
@@ -74,7 +90,8 @@ namespace Player
 
             if (dayCounter.dayCountDown == 3 && !dayCounter.isNight)
             {
-                gameOverUI.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "You finish the game";
+                gameOverUI.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text =
+                    "You finish the game";
                 gameOverUI.SetActive(true);
                 camera.SetActive(true);
                 StaticMethods.ShowCursor();
