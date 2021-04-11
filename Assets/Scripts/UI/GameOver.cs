@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -9,11 +10,20 @@ namespace UI
         public GameObject gameOverUI;
         public Button restartButton;
         public Button exitButton;
+        public GameObject freezingEffectSprite;
 
         private void Start()
         {
             restartButton.onClick.AddListener(Restart);
             exitButton.onClick.AddListener(Exit);
+        }
+
+        private void Update()
+        {
+            if (gameObject.activeSelf)
+            {
+                freezingEffectSprite.SetActive(false);
+            }
         }
 
         // the restart button click event
@@ -29,7 +39,7 @@ namespace UI
         // quit the application 
         private static void Exit()
         {
-            Application.Quit();
+            SceneManager.LoadScene("Menu");
         }
     }
 }

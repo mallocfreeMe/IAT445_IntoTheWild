@@ -20,7 +20,8 @@ namespace Player
         public GameObject cursor;
         public new GameObject camera;
         public bool closeToCampFire;
-
+        public GameObject freezingEffect;
+        
         private int _startTime, _currentTime;
 
         private void Start()
@@ -30,6 +31,21 @@ namespace Player
 
         private void Update()
         {
+            if (!dayCounter.isNight)
+            {
+                freezingEffect.SetActive(false);
+            }
+            else
+            {
+                if (closeToCampFire)
+                {
+                    freezingEffect.SetActive(false);
+                }
+                else
+                {
+                    freezingEffect.SetActive(true);
+                }
+            }
             CheckTimePass();
             CheckGameOver();
         }

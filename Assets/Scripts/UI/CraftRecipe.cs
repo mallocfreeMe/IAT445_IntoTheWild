@@ -55,18 +55,17 @@ namespace UI
             });
 
             _axeRecipe = new Dictionary<string, int>();
-            // _axeRecipe.Add("Stone", 2);
-            // _axeRecipe.Add("Log", 1);
-            _axeRecipe.Add("Branch", 2);
+            _axeRecipe.Add("Stone", 2);
+            _axeRecipe.Add("Branch", 3);
 
             _campFireRecipe = new Dictionary<string, int>();
-            _campFireRecipe.Add("Branch", 2);
+            _campFireRecipe.Add("Branch", 10);
+            _campFireRecipe.Add("Stone", 5);
 
             _tentRecipe = new Dictionary<string, int>();
-            // _tentRecipe.Add("Log", 5);
-            // _tentRecipe.Add("Branch", 4);
-            // _tentRecipe.Add("Reed", 10);
-            _tentRecipe.Add("Branch", 2);
+            _tentRecipe.Add("Log", 3);
+            _tentRecipe.Add("Stone", 4);
+            _tentRecipe.Add("Reed", 7);
         }
 
         private void Update()

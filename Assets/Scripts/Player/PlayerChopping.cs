@@ -11,11 +11,18 @@ namespace Player
     {
         public Transform axeTransform;
         public GameObject branchPrefab;
+        public GameObject logPrefab;
         public bool generateBranch;
         public Inventory inventory;
+        [Header("Axe Durability")] public int axeDurability = 3;
+
+        [Header("One Tree Generate a fix amount of logs and branches")]
+        public int generateBranchNumber = 5;
+        public int generateLogNumber = 2;
 
         private PlayerAnimation _playerAnimation;
         private Vector3 _generateBranchPos;
+        private int _axeCounter;
 
         private void Start()
         {
@@ -26,15 +33,33 @@ namespace Player
         {
             if (generateBranch)
             {
-                for (var i = 0; i < 5; i++)
+                _axeCounter++;
+                
+                for (var i = 0; i < generateBranchNumber; i++)
                 {
                     var branch = Instantiate(branchPrefab,
                         new Vector3(_generateBranchPos.x, _generateBranchPos.y + 10, _generateBranchPos.z),
                         Quaternion.identity);
                     branch.name = "Branch";
                 }
-
+                
+                for (var i = 0; i < generateLogNumber; i++)
+                {
+                    var log = Instantiate(logPrefab,
+                        new Vector3(_generateBranchPos.x, _generateBranchPos.y + 10, _generateBranchPos.z),
+                        Quaternion.identity);
+                    log.name = "Log";
+                }
+                
                 generateBranch = false;
+            }
+
+            if (_axeCounter == axeDurability)
+            {
+                var values = inventory.bag["Iron Axe"];
+                values--;
+                inventory.bag["Iron Axe"] = values;
+                _axeCounter = 0;
             }
         }
 
@@ -56,10 +81,6 @@ namespace Player
                         generateBranch = true;
                         _generateBranchPos =
                             Vector3.Scale(tree.position, activeTerrain.terrainData.size);
-                        
-                        var values = inventory.bag["Iron Axe"];
-                        values--;
-                        inventory.bag["Iron Axe"] = values;
                         break;
                     }
                 }

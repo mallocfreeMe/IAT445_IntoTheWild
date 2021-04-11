@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UI;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Player
 {
@@ -12,9 +13,14 @@ namespace Player
         public GameObject stonePrefab;
         public bool generateStone;
         public Inventory inventory;
+        [Header("Pick Axe Durability")] public int pickaxeDurability = 3;
+
+        [Header("A random amount of stones ranges")]
+        public int[] generateStoneRange;
 
         private PlayerAnimation _playerAnimation;
         private Vector3 _generateStonePos;
+        private int _pickAxeCounter;
 
         private void Start()
         {
@@ -25,13 +31,27 @@ namespace Player
         {
             if (generateStone)
             {
-                for (var i = 0; i < 5; i++)
+                _pickAxeCounter++;
+
+                var min = generateStoneRange[0];
+                var max = generateStoneRange[1];
+                var result = Random.Range(min, max);
+
+                for (var i = 0; i < result; i++)
                 {
                     var stone = Instantiate(stonePrefab, _generateStonePos, Quaternion.identity);
                     stone.name = "Stone";
                 }
 
                 generateStone = false;
+            }
+
+            if (_pickAxeCounter == pickaxeDurability)
+            {
+                var values = inventory.bag["Pick Axe"];
+                values--;
+                inventory.bag["Pick Axe"] = values;
+                _pickAxeCounter = 0;
             }
         }
 
@@ -43,10 +63,6 @@ namespace Player
                 {
                     generateStone = true;
                     _generateStonePos = other.transform.position;
-                    
-                    var values = inventory.bag["Pick Axe"];
-                    values--;
-                    inventory.bag["Pick Axe"] = values;
                     Destroy(other.gameObject);
                 }
             }

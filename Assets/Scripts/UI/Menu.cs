@@ -21,8 +21,9 @@ namespace UI
 
         private void Start()
         {
-            playButton.onClick.AddListener(Play);
-            exitButton.onClick.AddListener(Exit);
+            Play();
+            // playButton.onClick.AddListener(Play);
+            // exitButton.onClick.AddListener(Exit);
         }
 
         // the play button click event

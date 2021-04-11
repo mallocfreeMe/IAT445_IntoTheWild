@@ -35,14 +35,14 @@ namespace Player
                 }
                 else if (inventory.toolsShowOnScreen[1].activeSelf)
                 {
-                    _toolAnimator.SetBool("Pickaxe Swing", true);
                     _toolAnimator.SetBool("Axe Swing", false);
+                    _toolAnimator.SetBool("Pickaxe Swing", true);
                     playerIsChopping = false;
                     playerIsMining = true;
                 }
                 else
                 {
-                    _toolAnimator.SetBool("Pickaxe Swing", true);
+                    _toolAnimator.SetBool("Pickaxe Swing", false);
                     _toolAnimator.SetBool("Axe Swing", false);
                     playerIsChopping = false;
                     playerIsMining = false;
@@ -56,6 +56,8 @@ namespace Player
                 _toolAnimator.SetBool("Pickaxe Swing", false);
                 _toolAnimator.SetBool("Axe Swing", false);
                 playerIsChopping = false;
+                playerIsMining = false;
+                
                 _armAnimator.SetBool("Arm Swing", false);
             }
 
