@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -255,7 +256,7 @@ namespace UI
 
         private void InteractWithHighlightedSlot()
         {
-            if (_previousHighlightedSlot != null && Input.GetMouseButtonDown(1))
+            if (_previousHighlightedSlot != null && (Input.GetMouseButtonDown(1)))
             {
                 inventoryUI.transform.GetChild(_highlightedSlotIndex).gameObject.GetComponent<Button>().onClick
                     .Invoke();

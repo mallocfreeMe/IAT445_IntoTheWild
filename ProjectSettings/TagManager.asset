@@ -11,6 +11,8 @@ TagManager:
   - SwampTerrain
   - StoneTerrain
   - StoneTerrainSpc
+  - Fire
+  - Tree
   layers:
   - Default
   - TransparentFX
