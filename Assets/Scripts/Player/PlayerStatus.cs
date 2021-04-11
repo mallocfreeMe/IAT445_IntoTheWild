@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.FirstPerson;
 using Utility;
@@ -90,16 +91,14 @@ namespace Player
 
             if (dayCounter.dayCountDown == 3 && !dayCounter.isNight)
             {
-                gameOverUI.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text =
-                    "You finish the game";
-                gameOverUI.SetActive(true);
-                camera.SetActive(true);
-                StaticMethods.ShowCursor();
-                cursor.SetActive(false);
-                gameObject.SetActive(false);
-                playerStatusUI.SetActive(false);
-                playerInventoryUI.SetActive(false);
-                playerCraftingUI.SetActive(false);
+                // camera.SetActive(true);
+                // StaticMethods.ShowCursor();
+                // cursor.SetActive(false);
+                // gameObject.SetActive(false);
+                // playerStatusUI.SetActive(false);
+                // playerInventoryUI.SetActive(false);
+                // playerCraftingUI.SetActive(false);
+                SceneManager.LoadScene("Ending Scene");
             }
         }
 

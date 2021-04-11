@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Player
 {
-    public class PlayerChop : MonoBehaviour
+    public class PlayerChopping : MonoBehaviour
     {
         public Transform axeTransform;
         public GameObject branchPrefab;

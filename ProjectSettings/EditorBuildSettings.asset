@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Game.unity
     guid: 69f5b499d68211d41aa5b3cc0db94063
   - enabled: 1
-    path: Assets/Scenes/StartScreen.unity
+    path: Assets/Scenes/Menu.unity
     guid: adad820b9dd3c9348bba15668aacbc45
+  - enabled: 1
+    path: Assets/Scenes/Ending Scene.unity
+    guid: 2c38dbe0d397a43de81f34bdb73d4604
   m_configObjects: {}

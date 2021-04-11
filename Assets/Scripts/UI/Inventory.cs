@@ -17,6 +17,7 @@ namespace UI
         public GameObject[] itemsShowOnScreen;
         public GameObject playerHand;
         public GameObject[] toolsShowOnScreen;
+        public PlayerStatus playerStatus;
 
         private Image _hunger, _thirst, _health;
         private int _highlightedSlotIndex;
