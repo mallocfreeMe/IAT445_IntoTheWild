@@ -1,22 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ChangeScene : MonoBehaviour
+namespace Utility
 {
-    [SerializeField] private string sceneName; //[SerializeField] allows you to see private variables in the editor without making them public
-
-    // Start is called before the first frame update
-    void Start()
+    public class ChangeScene : MonoBehaviour
     {
-
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("Loading Scene: " + sceneName);
-        SceneManager.LoadScene(sceneName);
-
+        [SerializeField] private string sceneName; 
+    
+        private void OnTriggerEnter(Collider other)
+        {
+            SceneManager.LoadScene(sceneName);
+        }
     }
 }
