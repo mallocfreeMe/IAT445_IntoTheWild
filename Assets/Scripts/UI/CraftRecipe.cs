@@ -190,7 +190,7 @@ namespace UI
                         recipe = _axeRecipe;
                         index = 0;
                         var objA = Instantiate(axePrefab,new Vector3(_craftPos.x,_craftPos.y + 1,_craftPos.z), Quaternion.identity);
-                        objA.name = "Axe";
+                        objA.name = "Iron Axe";
                         break;
                     case "Camp Fire Cost":
                         recipe = _campFireRecipe;

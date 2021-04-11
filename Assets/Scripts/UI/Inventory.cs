@@ -15,6 +15,7 @@ namespace UI
         public Dictionary<string, int> bag;
         public GameObject[] itemsShowOnScreen;
         public GameObject playerHand;
+        public GameObject[] toolsShowOnScreen;
 
         private Image _hunger, _thirst, _health;
         private int _highlightedSlotIndex;
@@ -205,16 +206,38 @@ namespace UI
                 if (_highlightedSlotIndex < arr.Length)
                 {
                     playerHand.SetActive(false);
-                    foreach (var item in itemsShowOnScreen)
+                    if (arr[_highlightedSlotIndex] == toolsShowOnScreen[0].name || arr[_highlightedSlotIndex] == toolsShowOnScreen[1].name)
                     {
-                        if (item.name == arr[_highlightedSlotIndex])
-                        {
-                            item.SetActive(true);
-                        }
-                        else
+                        foreach (var item in itemsShowOnScreen)
                         {
                             item.SetActive(false);
                         }
+                        
+                        if (arr[_highlightedSlotIndex] == toolsShowOnScreen[0].name)
+                        {
+                            toolsShowOnScreen[0].SetActive(true);
+                        }
+                        else
+                        {
+                            toolsShowOnScreen[1].SetActive(true);
+                        }
+                    }
+                    else
+                    {
+                        toolsShowOnScreen[0].SetActive(false);
+                        toolsShowOnScreen[1].SetActive(false);
+                        
+                        foreach (var item in itemsShowOnScreen)
+                        {
+                            if (item.name == arr[_highlightedSlotIndex])
+                            {
+                                item.SetActive(true);
+                            }
+                            else
+                            {
+                                item.SetActive(false);
+                            }
+                        }   
                     }
                 }
                 else
@@ -224,6 +247,8 @@ namespace UI
                     {
                         item.SetActive(false);
                     }
+                    toolsShowOnScreen[0].SetActive(false);
+                    toolsShowOnScreen[1].SetActive(false);
                 }
             }
         }
