@@ -10,11 +10,11 @@ namespace Player
     public class PlayerPickUP : MonoBehaviour
     {
         public Inventory inventory;
-        //Mathf.Infinity
         private void FixedUpdate()
         {
             var layerMask = LayerMask.GetMask("Default");
             RaycastHit hit;
+            
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit,
                     20, layerMask) && Input.GetMouseButton(0) && inventory.bag.Count < 10 &&
                 hit.collider.gameObject.CompareTag("Item"))

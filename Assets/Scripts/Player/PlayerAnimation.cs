@@ -8,6 +8,7 @@ namespace Player
     {
         public Inventory inventory;
         public bool playerIsChopping;
+        public bool playerIsMining;
 
         private Animator _armAnimator;
         private Animator _itemAnimator;
@@ -30,18 +31,21 @@ namespace Player
                     _toolAnimator.SetBool("Axe Swing", true);
                     _toolAnimator.SetBool("Pickaxe Swing", false);
                     playerIsChopping = true;
+                    playerIsMining = false;
                 }
                 else if (inventory.toolsShowOnScreen[1].activeSelf)
                 {
                     _toolAnimator.SetBool("Pickaxe Swing", true);
                     _toolAnimator.SetBool("Axe Swing", false);
                     playerIsChopping = false;
+                    playerIsMining = true;
                 }
                 else
                 {
                     _toolAnimator.SetBool("Pickaxe Swing", true);
                     _toolAnimator.SetBool("Axe Swing", false);
                     playerIsChopping = false;
+                    playerIsMining = false;
                     
                     // arm -> arm swing
                     _armAnimator.SetBool("Arm Swing", true);
