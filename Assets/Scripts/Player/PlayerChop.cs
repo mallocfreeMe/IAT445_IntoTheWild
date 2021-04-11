@@ -12,6 +12,7 @@ namespace Player
         public Transform axeTransform;
         public GameObject branchPrefab;
         public bool generateBranch;
+        public Inventory inventory;
 
         private PlayerAnimation _playerAnimation;
         private Vector3 _generateBranchPos;
@@ -55,6 +56,10 @@ namespace Player
                         generateBranch = true;
                         _generateBranchPos =
                             Vector3.Scale(tree.position, activeTerrain.terrainData.size);
+                        
+                        var values = inventory.bag["Iron Axe"];
+                        values--;
+                        inventory.bag["Iron Axe"] = values;
                         break;
                     }
                 }

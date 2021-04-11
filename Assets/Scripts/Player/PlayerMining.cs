@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UI;
 using UnityEngine;
 
 namespace Player
@@ -10,6 +11,7 @@ namespace Player
         public Transform pickaxeTransform;
         public GameObject stonePrefab;
         public bool generateStone;
+        public Inventory inventory;
 
         private PlayerAnimation _playerAnimation;
         private Vector3 _generateStonePos;
@@ -41,6 +43,10 @@ namespace Player
                 {
                     generateStone = true;
                     _generateStonePos = other.transform.position;
+                    
+                    var values = inventory.bag["Pick Axe"];
+                    values--;
+                    inventory.bag["Pick Axe"] = values;
                     Destroy(other.gameObject);
                 }
             }

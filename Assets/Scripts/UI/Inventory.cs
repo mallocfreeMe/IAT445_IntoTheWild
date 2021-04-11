@@ -49,29 +49,10 @@ namespace UI
 
         private void Update()
         {
-            // ToggleInventoryUI();
             ShowHighlightedItemOnScreen();
-            if (inventoryUI.activeSelf)
-            {
-                ShowInventoryItems();
-                ScrollInventoryItems();
-                InteractWithHighlightedSlot();
-            }
-        }
-
-        private void ToggleInventoryUI()
-        {
-            if (Input.GetKeyDown(KeyCode.I))
-            {
-                if (inventoryUI.activeSelf)
-                {
-                    inventoryUI.SetActive(false);
-                }
-                else
-                {
-                    inventoryUI.SetActive(true);
-                }
-            }
+            ShowInventoryItems();
+            ScrollInventoryItems();
+            InteractWithHighlightedSlot();
         }
 
         private void ShowInventoryItems()
@@ -207,13 +188,14 @@ namespace UI
                 if (_highlightedSlotIndex < arr.Length)
                 {
                     playerHand.SetActive(false);
-                    if (arr[_highlightedSlotIndex] == toolsShowOnScreen[0].name || arr[_highlightedSlotIndex] == toolsShowOnScreen[1].name)
+                    if (arr[_highlightedSlotIndex] == toolsShowOnScreen[0].name ||
+                        arr[_highlightedSlotIndex] == toolsShowOnScreen[1].name)
                     {
                         foreach (var item in itemsShowOnScreen)
                         {
                             item.SetActive(false);
                         }
-                        
+
                         if (arr[_highlightedSlotIndex] == toolsShowOnScreen[0].name)
                         {
                             toolsShowOnScreen[0].SetActive(true);
@@ -227,7 +209,7 @@ namespace UI
                     {
                         toolsShowOnScreen[0].SetActive(false);
                         toolsShowOnScreen[1].SetActive(false);
-                        
+
                         foreach (var item in itemsShowOnScreen)
                         {
                             if (item.name == arr[_highlightedSlotIndex])
@@ -238,7 +220,7 @@ namespace UI
                             {
                                 item.SetActive(false);
                             }
-                        }   
+                        }
                     }
                 }
                 else
@@ -248,6 +230,7 @@ namespace UI
                     {
                         item.SetActive(false);
                     }
+
                     toolsShowOnScreen[0].SetActive(false);
                     toolsShowOnScreen[1].SetActive(false);
                 }
