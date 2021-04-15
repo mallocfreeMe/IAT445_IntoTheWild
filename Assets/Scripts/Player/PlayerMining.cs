@@ -63,7 +63,7 @@ namespace Player
                 {
                     generateStone = true;
                     _generateStonePos = other.transform.position;
-                    Destroy(other.gameObject);
+                    Destroy(other.gameObject, 0.3f);
                 }
             }
         }

@@ -33,17 +33,17 @@ namespace Player
         {
             if (!dayCounter.isNight)
             {
-                freezingEffect.SetActive(false);
+                //freezingEffect.SetActive(false);
             }
             else
             {
                 if (closeToCampFire)
                 {
-                    freezingEffect.SetActive(false);
+                    //freezingEffect.SetActive(false);
                 }
                 else
                 {
-                    freezingEffect.SetActive(true);
+                    //freezingEffect.SetActive(true);
                 }
             }
             CheckTimePass();
