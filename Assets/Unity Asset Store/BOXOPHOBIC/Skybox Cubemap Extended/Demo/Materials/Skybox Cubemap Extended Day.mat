@@ -130,5 +130,5 @@ Material:
     - _SkyTint: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Tex_HDR: {r: 1, g: 1, b: 0, a: 0}
     - _Tint: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
-    - _TintColor: {r: 0.58584905, g: 0.6445018, b: 0.6509434, a: 1}
+    - _TintColor: {r: 0.43106088, g: 0.56118107, b: 0.5754717, a: 1}
   m_BuildTextureStacks: []

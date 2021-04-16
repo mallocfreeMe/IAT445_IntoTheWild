@@ -33,17 +33,17 @@ namespace Player
         {
             if (!dayCounter.isNight)
             {
-                //freezingEffect.SetActive(false);
+                freezingEffect.SetActive(false);
             }
             else
             {
                 if (closeToCampFire)
                 {
-                    //freezingEffect.SetActive(false);
+                    freezingEffect.SetActive(false);
                 }
                 else
                 {
-                    //freezingEffect.SetActive(true);
+                    freezingEffect.SetActive(true);
                 }
             }
             CheckTimePass();
@@ -53,6 +53,8 @@ namespace Player
         private void CheckTimePass()
         {
             _currentTime = DateTime.Now.Minute;
+            Debug.Log("cur " + _currentTime);
+            Debug.Log("start " + _startTime);
             if (_currentTime > _startTime)
             {
                 if (!dayCounter.isNight)

@@ -14,6 +14,7 @@ namespace Player
         public GameObject logPrefab;
         public bool generateBranch;
         public Inventory inventory;
+
         [Header("Axe Durability")] public int axeDurability = 3;
 
         [Header("One Tree Generate a fix amount of logs and branches")]
@@ -77,11 +78,14 @@ namespace Player
                     if (Vector3.Distance(Vector3.Scale(tree.position, activeTerrain.terrainData.size),
                         axeTransform.position) < 5)
                     {
-                        treeInstances.Remove(tree);
-                        generateBranch = true;
-                        _generateBranchPos =
-                            Vector3.Scale(tree.position, activeTerrain.terrainData.size);
-                        break;
+
+                            treeInstances.Remove(tree);
+                            generateBranch = true;
+                            _generateBranchPos =
+                                Vector3.Scale(tree.position, activeTerrain.terrainData.size);
+                            break;
+                    
+
                     }
                 }
 

@@ -1,5 +1,6 @@
 using System;
 using UI;
+using System.Collections;
 using UnityEngine;
 
 namespace Player
@@ -13,7 +14,8 @@ namespace Player
         private Animator _armAnimator;
         private Animator _itemAnimator;
         private Animator _toolAnimator;
-
+        float timer = 40;
+        bool eat = false;
         private void Start()
         {
             _armAnimator = transform.GetChild(0).GetChild(0).gameObject.GetComponent<Animator>();
@@ -21,8 +23,19 @@ namespace Player
             _toolAnimator = transform.GetChild(0).GetChild(2).gameObject.GetComponent<Animator>();
         }
 
+        IEnumerator DelayAction(float delayTime)
+        {
+            //Wait for the specified delay time before continuing.
+            yield return new WaitForSeconds(delayTime);
+            _itemAnimator.SetBool("Eat", false);
+            //Do the action after the delay time has finished.
+        }
+
         private void Update()
         {
+
+
+
             // tools -> swing animation
             if (Input.GetMouseButtonDown(0))
             {
@@ -48,7 +61,7 @@ namespace Player
                     playerIsMining = false;
                     
                     // arm -> arm swing
-                    _armAnimator.SetBool("Arm Swing", true);
+                    //_armAnimator.SetBool("Arm Swing", true);
                 }
             }
             else if (Input.GetMouseButtonUp(0))
@@ -58,13 +71,14 @@ namespace Player
                 playerIsChopping = false;
                 playerIsMining = false;
                 
-                _armAnimator.SetBool("Arm Swing", false);
+                //_armAnimator.SetBool("Arm Swing", false);
             }
 
             // food -> eating animation
+            var itemsOnHand = true;
             if (Input.GetMouseButtonDown(1))
             {
-                var itemsOnHand = false;
+                
                 string itemName = "";
 
                 foreach (var item in inventory.itemsShowOnScreen)
@@ -83,14 +97,25 @@ namespace Player
                     var pos = Array.IndexOf(food, itemName);
                     if (pos > -1)
                     {
+                        //Debug.Log("eating");
+                        
                         _itemAnimator.SetBool("Eat", true);
                     }
                 }
             }
             else if (Input.GetMouseButtonUp(1))
             {
-                _itemAnimator.SetBool("Eat", false);
+                StartCoroutine(DelayAction(0.4f));
+                itemsOnHand = false;
             }
+
+
         }
+
+
     }
+
+
+
+
 }
